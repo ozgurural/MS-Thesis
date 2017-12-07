@@ -5,7 +5,7 @@
 * **Thesis Short Description :** Information analysts constantly scan many sources including twitter to become aware of the attacks. In this thesis, I am investigating an automated system which can analyze Turkish Twitter tweets with NLP to detect a Cyber Attack.  
 
 * **Thesis Author:** Özgür Ural
-* **Thesis Advisors :** Cengiz Acartürk, Atilla Özgit
+* **Thesis Advisor :** Cengiz Acartürk
 
 * **University :** Middle East Technical University
 * **Institute :** Graduate School of Informatics
