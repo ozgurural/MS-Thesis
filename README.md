@@ -2,8 +2,7 @@
 
 ## Thesis Informations
 * **Thesis Title :** Weakly Supervised Extraction of Cyber Attacks from Twitter with Turkish Tweet Analysis.
-* **Thesis Description :** Information analysts constantly scan many sources including twitter to become aware of the attacks. In this thesis, I am investigating an automated system which can analyze Turkish Twitter tweets with NLP to detect a Cyber Attack.  
-
+* **Thesis Description :** Investigation of an automated system which can analyze Turkish Twitter tweets with NLP to detect Cyber Attacks.
 * **Thesis Author:** Özgür Ural
 * **Thesis Advisor :** Cengiz Acartürk
 
