@@ -93,4 +93,4 @@ if __name__ == '__main__':
     api = tweepy.API(auth)
 
     twitter_stream = Stream(auth, MyListener(args.data_dir, args.query))
-    twitter_stream.filter(track=[args.query])
+    twitter_stream.filter(languages=["tr"],track=[args.query])
