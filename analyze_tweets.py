@@ -1,0 +1,42 @@
+# -*- coding: utf-8 -*-
+
+import json
+import re
+
+def main():
+
+
+	#Reading Tweets
+	print('Reading Tweets\n')
+	tweets_data_path = 'data/stream_ddos__siber__hacklendi.json'
+
+	tweets_data = []
+	notParsed = []
+	tweets_file = open(tweets_data_path, "r")
+	for line in tweets_file:
+		if line.strip():   
+			try:
+				tweet = json.loads(line)
+				tweets_data.append(tweet)
+			except:
+				notParsed.append(line)
+				continue
+
+	print(len(tweets_data))
+	print('Could not parse: ', len(notParsed))
+
+	#Structuring Tweets
+	print('Structuring Tweets\n')
+	print(type(tweets_data))
+	tweets = {}
+
+	tweets['text'] = [tweet['text'] for tweet in tweets_data]
+	print('end')
+'''
+	with open('extractedlines.txt', 'a') as the_file:
+		for send in tweets['text']:
+			the_file.write(send)
+'''
+
+if __name__ == '__main__':
+	main()
