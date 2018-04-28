@@ -32,11 +32,12 @@ def main():
 
 	tweets['text'] = [tweet['text'] for tweet in tweets_data]
 	print('end')
-'''
-	with open('extractedlines.txt', 'a') as the_file:
+
+	with open('extractedlines.txt', 'w', encoding='utf-8') as the_file:
 		for send in tweets['text']:
+			print(send)
 			the_file.write(send)
-'''
+
 
 if __name__ == '__main__':
 	main()
