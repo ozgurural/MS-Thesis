@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{a0413db7-801e-4995-b42d-dc333c22f57a}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>analyze_tweets.py</StartupFile>
+    <StartupFile>Step_1_twitter_stream_download.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -24,27 +24,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="images\thesis.png" />
-    <Content Include="turkce_sozluk2.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="analyze_tweets.py">
+    <Compile Include="Step_2_analyze_tweets.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="config.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="deasciifier.py" />
-    <Compile Include="emoji.py" />
-    <Compile Include="filedeneme.py" />
-    <Compile Include="normalization.py" />
-    <Compile Include="normalization_file.py" />
-    <Compile Include="twitter_streaming.py">
+    <Compile Include="Step_1_twitter_stream_download.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="twitter_stream_download.py">
+    <Compile Include="Step_3_itu_nlp_pipeline.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

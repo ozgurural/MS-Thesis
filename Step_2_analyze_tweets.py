@@ -5,7 +5,6 @@ import re
 
 def main():
 
-
 	#Reading Tweets
 	print('Reading Tweets\n')
 	tweets_data_path = 'data/stream_ddos__siber__hacklendi.json'
