@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{a0413db7-801e-4995-b42d-dc333c22f57a}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>Step_1_twitter_stream_download.py</StartupFile>
+    <StartupFile>pipeline_caller.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -29,6 +29,7 @@
     <Folder Include="images" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="pipeline_caller.py" />
     <Compile Include="Step_2_analyze_tweets.py">
       <SubType>Code</SubType>
     </Compile>
