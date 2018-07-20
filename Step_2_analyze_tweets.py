@@ -7,7 +7,7 @@ def main():
 
 	#Reading Tweets
 	print('Reading Tweets\n')
-	tweets_data_path = 'data/stream_ddos__siber__hacklendi.json'
+	tweets_data_path = 'Step_1_output/stream_ddos__siber__hacklendi.json'
 
 	tweets_data = []
 	notParsed = []
@@ -32,11 +32,10 @@ def main():
 	tweets['text'] = [tweet['text'] for tweet in tweets_data]
 	print('end')
 
-	with open('extractedlines.txt', 'w', encoding='utf-8') as the_file:
+	with open('Step_2_output/extractedlines.txt', 'w', encoding='utf-8') as the_file:
 		for send in tweets['text']:
 			print(send)
 			the_file.write(send)
-
 
 if __name__ == '__main__':
 	main()
