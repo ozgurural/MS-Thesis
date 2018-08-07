@@ -1,17 +1,22 @@
+# To run this code, first edit config.py with your configuration
+#
+
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import json
 import re
 
+import config
+
 def main():
 
 	#Reading Tweets
 	print('Reading Tweets\n')
-	tweets_data_path = 'Step_1_output/stream_ddos__siber__hacklendi.json'
 
 	tweets_data = []
 	notParsed = []
-	tweets_file = open(tweets_data_path, "r")
+	tweets_file = open(config.tweets_data_path, "r")
 	for line in tweets_file:
 		if line.strip():   
 			try:

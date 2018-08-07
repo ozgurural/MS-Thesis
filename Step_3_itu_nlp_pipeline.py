@@ -1,3 +1,6 @@
+# To run this code, first edit config.py with your configuration
+#
+
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
 
@@ -7,20 +10,13 @@ import re
 import urllib.parse
 import urllib.request
 
-API_TOKEN = "mV8gEbWRDGnaSKwcRyFnwwp11S6tUmCZ"
-DEFAULT_OUTPUT_DIR = 'Step_3_output/output.txt'
-API_URL = 'http://tools.nlp.itu.edu.tr/SimpleApi?tool='
-PIPELINE_ENCODING = 'UTF-8'
-INPUT_DIR = "Step_2_output/extractedlines.txt"
-DEFAULT_TOOL =  "normalize"
+import config
 
 class PipelineCaller(object):
-    API_URL = 'http://tools.nlp.itu.edu.tr/SimpleApi'
-    PIPELINE_ENCODING = 'UTF-8'
 
     DEFAULT_SENTENCE_SPLIT_DELIMITER_CLASS = '[\.\?:;!]'
 
-    def __init__(self, tool='normalize', text='example', token=API_TOKEN, processing_type='sentence'):
+    def __init__(self, tool='normalize', text='example', token=config.API_TOKEN, processing_type='sentence'):
         self.tool = tool
         self.text = text
         self.token = token
@@ -70,32 +66,30 @@ class PipelineCaller(object):
                 self.words.append(word)
 
     def encode_parameters(self, text):
-        return urllib.parse.urlencode({'tool': self.tool, 'input': text, 'token': self.token}).encode(self.PIPELINE_ENCODING)
+        return urllib.parse.urlencode({'tool': self.tool, 'input': text, 'token': self.token}).encode(config.PIPELINE_ENCODING)
     
     def request(self, params):
-        response = urllib.request.urlopen(self.API_URL, params)
-        return response.read().decode(self.PIPELINE_ENCODING)
-
-
+        response = urllib.request.urlopen(config.API_URL, params)
+        return response.read().decode(config.PIPELINE_ENCODING)
 
 def main():
-    with open(INPUT_DIR, encoding=PIPELINE_ENCODING) as input_file:
+    with open(config.STEP_3_INPUT_DIR, encoding=config.PIPELINE_ENCODING) as input_file:
         text = input_file.read()
     
     print(text)
-    print(API_TOKEN);
-    print(DEFAULT_OUTPUT_DIR);
-    print(API_URL);
-    print(PIPELINE_ENCODING);
-    print(INPUT_DIR);
-    print(DEFAULT_TOOL);
-    REQUEST_URL = API_URL+ DEFAULT_TOOL + "&input="+"MERHABAAAAAA"+"&token="+ API_TOKEN
+    print(config.API_TOKEN);
+    print(config.DEFAULT_OUTPUT_DIR);
+    print(config.API_URL);
+    print(config.PIPELINE_ENCODING);
+    print(config.STEP_3_INPUT_DIR);
+    print(config.DEFAULT_TOOL);
+    REQUEST_URL = config.API_URL+ config.DEFAULT_TOOL + "&input="+"MERHABAAAAAA"+"&token="+ config.API_TOKEN
     print(REQUEST_URL);
 
     start_time = time.time()
 
-    caller = PipelineCaller(DEFAULT_TOOL, text, API_TOKEN, 'sentence')
-    with open(DEFAULT_OUTPUT_DIR, 'w', encoding=PIPELINE_ENCODING) as output_file:
+    caller = PipelineCaller(config.DEFAULT_TOOL, text, config.API_TOKEN, 'sentence')
+    with open(config.DEFAULT_OUTPUT_DIR, 'w', encoding=config.PIPELINE_ENCODING) as output_file:
         output_file.write('{}\n'.format(caller.call()))
 
     process_time = time.time() - start_time

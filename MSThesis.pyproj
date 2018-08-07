@@ -29,7 +29,6 @@
     <Folder Include="images" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="pipeline_caller.py" />
     <Compile Include="Step_2_analyze_tweets.py">
       <SubType>Code</SubType>
     </Compile>
