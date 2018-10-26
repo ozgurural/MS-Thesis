@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{a0413db7-801e-4995-b42d-dc333c22f57a}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>Step_1_twitter_stream_download.py</StartupFile>
+    <StartupFile>Step_2_analyze_tweets.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>

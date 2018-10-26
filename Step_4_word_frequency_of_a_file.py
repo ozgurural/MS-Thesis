@@ -11,7 +11,7 @@ import config
 
 frequency = {}
 
-document_text = open('Step_3_output/output.txt', 'r')
+document_text = open(STEP_4_INPUT_DIR, 'r')
 text_string = document_text.read().lower()
 match_pattern = re.findall(r'\b[a-z]{3,15}\b', text_string)
 totalcount = 0
