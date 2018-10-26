@@ -26,7 +26,7 @@ frequency_list = frequency.keys()
 for words in frequency_list:
     print(words, frequency[words])
 
-for selected_strings in config.stringvector:
+for selected_strings in config.STRING_VECTOR:
     print("results=>>>>>>>>>>>>>>>")
     print(selected_strings, frequency[selected_strings])
     print("frequecy of "+ selected_strings + ":", frequency[selected_strings]/totalcount)

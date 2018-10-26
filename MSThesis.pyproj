@@ -5,14 +5,12 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{a0413db7-801e-4995-b42d-dc333c22f57a}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>Step_4_word_frequency_of_a_file.py</StartupFile>
+    <StartupFile>Step_1_twitter_stream_download.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <InterpreterId>{78f0739f-9797-470a-b717-8b719b2fd926}</InterpreterId>
-    <InterpreterVersion>3.5</InterpreterVersion>
     <CommandLineArguments>-q "ddos, siber, hacklendi" -d data</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
@@ -20,10 +18,11 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
-    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="logging.conf" />
     <Content Include="images\thesis.png" />
+    <Content Include="VisualStudio.gitignore" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images" />
@@ -45,9 +44,6 @@
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <InterpreterReference Include="{78f0739f-9797-470a-b717-8b719b2fd926}\3.5" />
-  </ItemGroup>
-  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
