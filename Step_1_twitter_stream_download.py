@@ -3,37 +3,35 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import tweepy
-from tweepy import Stream
-from tweepy import OAuthHandler
-from tweepy.streaming import StreamListener
-import time
+import tweepy 
 import string
-import config
 import json
-from datetime import datetime
+import datetime
 
-class MyListener(StreamListener):
+import config
+
+
+class MyListener(tweepy.StreamListener):
     """Custom StreamListener for streaming data."""
 
     def __init__(self, data_dir, query):
         query_fname = format_filename(query)
-        i = datetime.now()
+        i = datetime.datetime.now()
         self.outfile = "Step_1_output/"+i.strftime('%Y_%m_%d')+"_stream_%s.json" % (query_fname)
 
     def on_data(self, data):
         try:
             with open(self.outfile, 'a') as f:
                 f.write(data)
-                print(data)
+                config.logger.info(data)
                 return True
         except BaseException as e:
-            print("Error on_data: %s" % str(e))
+            config.logger.error("Error on_data: %s" % str(e))
             time.sleep(5)
         return True
 
     def on_error(self, status):
-        print(status)
+        config.logger.error(status)
         return True
 
 def format_filename(fname):
@@ -61,10 +59,10 @@ def convert_valid(one_char):
         return '_'
 
 if __name__ == '__main__':
-    print(config.step_1_query)
-    auth = OAuthHandler(config.consumer_key, config.consumer_secret)
-    auth.set_access_token(config.access_token, config.access_secret)
+    config.logger.info(config.STEP_1_QUERY)
+    auth = tweepy.OAuthHandler(config.CONSUMER_KEY, config.CONSUMER_SECRET)
+    auth.set_access_token(config.ACCESS_TOKEN, config.ACESS_SECRET)
     api = tweepy.API(auth)
 
-    twitter_stream = Stream(auth, MyListener("Step_1_output", config.step_1_query))
-    twitter_stream.filter(languages=["tr"],track=[config.step_1_query])
+    twitter_stream = tweepy.Stream(auth, MyListener("Step_1_output", config.STEP_1_QUERY))
+    twitter_stream.filter(languages=["tr"],track=[config.STEP_1_QUERY])

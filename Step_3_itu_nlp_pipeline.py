@@ -3,10 +3,8 @@
 
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
-
 import time
 import re
-
 import urllib.parse
 import urllib.request
 
@@ -16,7 +14,7 @@ class PipelineCaller(object):
 
     DEFAULT_SENTENCE_SPLIT_DELIMITER_CLASS = '[\.\?:;!]'
 
-    def __init__(self, tool='normalize', text='example', token=config.API_TOKEN, processing_type='sentence'):
+    def __init__(self, tool = 'normalize', text = 'example', token = config.ITU_NLP_API_TOKEN, processing_type='sentence'):
         self.tool = tool
         self.text = text
         self.token = token
@@ -76,25 +74,26 @@ def main():
     with open(config.STEP_3_INPUT_DIR, encoding=config.PIPELINE_ENCODING) as input_file:
         text = input_file.read()
     
-    print(text)
-    print(config.API_TOKEN);
-    print(config.DEFAULT_OUTPUT_DIR);
-    print(config.API_URL);
-    print(config.PIPELINE_ENCODING);
-    print(config.STEP_3_INPUT_DIR);
-    print(config.DEFAULT_TOOL);
-    REQUEST_URL = config.API_URL+ config.DEFAULT_TOOL + "&input="+"MERHABAAAAAA"+"&token="+ config.API_TOKEN
-    print(REQUEST_URL);
+    config.logger.info(text)
+    config.logger.info(ITU_NLP_API_TOKEN)
+    config.logger.info(DEFAULT_OUTPUT_DIR)
+    config.logger.info(API_URL)
+    config.logger.info(PIPELINE_ENCODING)
+    config.logger.info(STEP_3_INPUT_DIR)
+    config.logger.info(DEFAULT_TOOL)
+
+    REQUEST_URL = config.API_URL + config.DEFAULT_TOOL + "&input=" + "MERHABAAAAAA" + "&token=" + config.ITU_NLP_API_TOKEN
+    config.logger.info(REQUEST_URL)
 
     start_time = time.time()
 
-    caller = PipelineCaller(config.DEFAULT_TOOL, text, config.API_TOKEN, 'sentence')
-    with open(config.DEFAULT_OUTPUT_DIR, 'w', encoding=config.PIPELINE_ENCODING) as output_file:
+    caller = PipelineCaller(config.DEFAULT_TOOL, text, config.ITU_NLP_API_TOKEN, 'sentence')
+    with open(config.DEFAULT_OUTPUT_DIR, 'w', encoding = config.PIPELINE_ENCODING) as output_file:
         output_file.write('{}\n'.format(caller.call()))
 
     process_time = time.time() - start_time
 
-    print("[DONE] It took {0:.0f} seconds to process whole text.".format(process_time))
+    config.logger.info("[DONE] It took {0:.0f} seconds to process whole text.".format(process_time))
 
 if __name__ == '__main__':
 	main()

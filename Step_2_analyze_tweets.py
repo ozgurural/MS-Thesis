@@ -16,7 +16,7 @@ def main():
 
 	tweets_data = []
 	notParsed = []
-	tweets_file = open(config.tweets_data_path, "r")
+	tweets_file = open(config.TWEETS_DATA_PATH, "r")
 	for line in tweets_file:
 		if line.strip():   
 			try:
