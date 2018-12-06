@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Step_1_output",
+    "\\Step_2_output",
+    "\\Step_3_output"
   ],
+  "SelectedNode": "\\Step_3_output\\output.txt",
   "PreviewInSolutionExplorer": false
 }

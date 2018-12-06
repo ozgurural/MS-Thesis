@@ -75,20 +75,20 @@ def main():
         text = input_file.read()
     
     config.logger.info(text)
-    config.logger.info(ITU_NLP_API_TOKEN)
-    config.logger.info(DEFAULT_OUTPUT_DIR)
-    config.logger.info(API_URL)
-    config.logger.info(PIPELINE_ENCODING)
-    config.logger.info(STEP_3_INPUT_DIR)
-    config.logger.info(DEFAULT_TOOL)
+    config.logger.info(config.ITU_NLP_API_TOKEN)
+    config.logger.info(config.STEP_4_INPUT_DIR)
+    config.logger.info(config.API_URL)
+    config.logger.info(config.PIPELINE_ENCODING)
+    config.logger.info(config.STEP_3_INPUT_DIR)
+    config.logger.info(config.DEFAULT_TOOL)
 
-    REQUEST_URL = config.API_URL + config.DEFAULT_TOOL + "&input=" + "MERHABAAAAAA" + "&token=" + config.ITU_NLP_API_TOKEN
+    REQUEST_URL = config.API_URL +"?"+ config.DEFAULT_TOOL + "&input=" + "MERHABAAAAAA" + "&token=" + config.ITU_NLP_API_TOKEN
     config.logger.info(REQUEST_URL)
 
     start_time = time.time()
 
     caller = PipelineCaller(config.DEFAULT_TOOL, text, config.ITU_NLP_API_TOKEN, 'sentence')
-    with open(config.DEFAULT_OUTPUT_DIR, 'w', encoding = config.PIPELINE_ENCODING) as output_file:
+    with open(config.STEP_4_INPUT_DIR, 'w', encoding = config.PIPELINE_ENCODING) as output_file:
         output_file.write('{}\n'.format(caller.call()))
 
     process_time = time.time() - start_time
