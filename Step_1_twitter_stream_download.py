@@ -2,11 +2,12 @@
 #
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import tweepy 
 import string
 import json
 import datetime
+import sqlite3
+import time
 
 import config
 
@@ -17,13 +18,14 @@ class MyListener(tweepy.StreamListener):
     def __init__(self, data_dir, query):
         query_fname = format_filename(query)
         i = datetime.datetime.now()
-        self.outfile = "Step_1_output/"+i.strftime('%Y_%m_%d')+"_stream_%s.json" % (query_fname)
+        self.outfile = "Step_1_output/" + i.strftime('%Y_%m_%d') + "_stream_%s.json" % (query_fname)
 
     def on_data(self, data):
         try:
             with open(self.outfile, 'a') as f:
                 f.write(data)
                 config.logger.info(data)
+                createSqliteTable(data);
                 return True
         except BaseException as e:
             config.logger.error("Error on_data: %s" % str(e))
@@ -57,6 +59,24 @@ def convert_valid(one_char):
         return one_char
     else:
         return '_'
+
+def createSqliteTable(data):
+    d = json.loads(data)
+    rawTwitterDB = sqlite3.connect("twitterDataDb.sqlite")
+    i = datetime.datetime.now()
+
+    im = rawTwitterDB.cursor()
+    im.execute("""CREATE TABLE IF NOT EXISTS
+        rawTwitterDBtable (Name, Date, Text, Status)""")
+
+    im.execute("""INSERT INTO rawTwitterDBtable VALUES
+        (\""""+ d['user']['screen_name'] +"""\", 
+        \""""+ i.strftime('%Y_%m_%d') +"""\",
+        \""""+ d['text'] +"""\",
+        0 )""")
+
+    rawTwitterDB.commit()
+    rawTwitterDB.close()
 
 if __name__ == '__main__':
     config.logger.info(config.STEP_1_QUERY)

@@ -1,10 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Step_1_output",
-    "\\Step_2_output",
-    "\\Step_3_output"
+    "\\Step_1_output"
   ],
-  "SelectedNode": "\\Step_3_itu_nlp_pipeline.py",
+  "SelectedNode": "\\Step_1_output\\stream_apple.json",
   "PreviewInSolutionExplorer": false
 }
