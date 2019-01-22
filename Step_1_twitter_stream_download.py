@@ -10,6 +10,7 @@ import sqlite3
 import time
 
 import config
+import sqliteOperations
 
 
 class MyListener(tweepy.StreamListener):
@@ -25,7 +26,7 @@ class MyListener(tweepy.StreamListener):
             with open(self.outfile, 'a') as f:
                 f.write(data)
                 config.logger.info(data)
-                createSqliteTable(data);
+                sqliteOperations.createSqliteTable(data);
                 return True
         except BaseException as e:
             config.logger.error("Error on_data: %s" % str(e))
@@ -60,23 +61,6 @@ def convert_valid(one_char):
     else:
         return '_'
 
-def createSqliteTable(data):
-    d = json.loads(data)
-    rawTwitterDB = sqlite3.connect("twitterDataDb.sqlite")
-    i = datetime.datetime.now()
-
-    im = rawTwitterDB.cursor()
-    im.execute("""CREATE TABLE IF NOT EXISTS
-        rawTwitterDBtable (Name, Date, Text, Status)""")
-
-    im.execute("""INSERT INTO rawTwitterDBtable VALUES
-        (\""""+ d['user']['screen_name'] +"""\", 
-        \""""+ i.strftime('%Y_%m_%d') +"""\",
-        \""""+ d['text'] +"""\",
-        0 )""")
-
-    rawTwitterDB.commit()
-    rawTwitterDB.close()
 
 if __name__ == '__main__':
     config.logger.info(config.STEP_1_QUERY)

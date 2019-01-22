@@ -9,12 +9,14 @@ import urllib.parse
 import urllib.request
 
 import config
+import sqliteOperations
+
 
 class PipelineCaller(object):
 
     DEFAULT_SENTENCE_SPLIT_DELIMITER_CLASS = '[\.\?:;!]'
 
-    def __init__(self, tool = 'normalize', text = 'example', token = config.ITU_NLP_API_TOKEN, processing_type='sentence'):
+    def __init__(self, tool='normalize', text='example', token=config.ITU_NLP_API_TOKEN, processing_type='sentence'):
         self.tool = tool
         self.text = text
         self.token = token
@@ -82,10 +84,25 @@ def main():
     config.logger.info(config.STEP_3_INPUT_DIR)
     config.logger.info(config.DEFAULT_TOOL)
 
-    REQUEST_URL = config.API_URL +"?"+ config.DEFAULT_TOOL + "&input=" + "MERHABAAAAAA" + "&token=" + config.ITU_NLP_API_TOKEN
+    REQUEST_URL = config.API_URL + "?" + "tool=" + config.DEFAULT_TOOL + "&input=" + "MERHABAAAAAA" + "&token=" + config.ITU_NLP_API_TOKEN
     config.logger.info(REQUEST_URL)
 
     start_time = time.time()
+    
+    #####
+    database = "twitterDataDb.sqlite"
+ 
+    # create a database connection
+    conn = sqliteOperations.create_connection(database)
+    with conn:
+        print("1. Query task by Status:")
+        sqliteOperations.select_task_by_status(conn,0)
+ 
+        print("2. Query all tasks")
+        sqliteOperations.select_all_tasks(conn)
+    #####
+
+
 
     caller = PipelineCaller(config.DEFAULT_TOOL, text, config.ITU_NLP_API_TOKEN, 'sentence')
     with open(config.STEP_4_INPUT_DIR, 'w', encoding = config.PIPELINE_ENCODING) as output_file:
