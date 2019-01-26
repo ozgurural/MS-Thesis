@@ -90,16 +90,14 @@ def main():
     start_time = time.time()
     
     #####
-    database = "twitterDataDb.sqlite"
+
  
     # create a database connection
-    conn = sqliteOperations.create_connection(database)
+    conn = sqliteOperations.createConnection(sqliteOperations.database)
     with conn:
         print("1. Query task by Status:")
-        sqliteOperations.select_task_by_status(conn,0)
+        rows = sqliteOperations.selectTaskByStatus(conn,"0")
  
-        print("2. Query all tasks")
-        sqliteOperations.select_all_tasks(conn)
     #####
 
 

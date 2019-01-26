@@ -1,6 +1,10 @@
 #!/usr/bin/python
 import sqlite3
+import json
+import datetime
 from sqlite3 import Error
+
+database = "twitterDataDb.sqlite"
  
 def createSqliteTable(data):
     d = json.loads(data)
@@ -20,7 +24,7 @@ def createSqliteTable(data):
     rawTwitterDB.commit()
     rawTwitterDB.close()
  
-def create_connection(db_file):
+def createConnection(db_file):
     """ create a database connection to the SQLite database
         specified by the db_file
     :param db_file: database file
@@ -50,7 +54,7 @@ def select_all_tasks(conn):
         print(row)
  
  
-def select_task_by_status(conn, Status):
+def selectTaskByStatus(conn, status):
     """
     Query tasks by priority
     :param conn: the Connection object
@@ -58,12 +62,15 @@ def select_task_by_status(conn, Status):
     :return:
     """
     cur = conn.cursor()
-    cur.execute("SELECT * FROM rawTwitterDBtable WHERE Status=0")
+    cur.execute("SELECT * FROM rawTwitterDBtable WHERE Status="+status)
  
     rows = cur.fetchall()
  
     for row in rows:
         print(row)
+
+    return rows
+
  
 """ 
 def main():

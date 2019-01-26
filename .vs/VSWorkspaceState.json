@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Step_1_output"
+    "\\Step_1_output",
+    "\\ThesisPlan"
   ],
-  "SelectedNode": "\\Step_4_word_frequency_of_a_file.py",
+  "SelectedNode": "\\sqliteOperations.py",
   "PreviewInSolutionExplorer": false
 }
