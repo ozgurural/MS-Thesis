@@ -14,6 +14,9 @@ plotly.tools.set_credentials_file(username='ozgurural', api_key='ZGOxDzigX5NHgC7
 import config
 import sqliteOperations
 
+from bs4 import BeautifulSoup
+
+
 frequency = {}
 totalcount = 0
 
@@ -42,3 +45,7 @@ with conn:
         print("results=>>>>>>>>>>>>>>>")
         print(selected_strings, frequency[selected_strings])
         print("frequecy of " + selected_strings + ":", frequency[selected_strings] / totalcount)
+
+
+with open("hacked.html") as fp:
+    soup = BeautifulSoup(fp)
