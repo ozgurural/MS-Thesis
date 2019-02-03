@@ -5,11 +5,7 @@
 # -*- coding: utf-8 -*-
 import re
 import string
-
-import plotly.plotly as py
-import plotly.graph_objs as go
-import plotly
-plotly.tools.set_credentials_file(username='ozgurural', api_key='ZGOxDzigX5NHgC7PGMnM')
+import datetime
 
 import config
 import sqliteOperations
@@ -34,18 +30,74 @@ with conn:
     print("1. Query task by Status:")
     rows = sqliteOperations.selectTaskByStatus(conn,"0")
     for row in rows:
-        getFrequencyOfWords(row);
+        getFrequencyOfWords(row)
 
-    frequency_list = frequency.keys()
-
-    for words in frequency_list:
-        print(words, frequency[words])
+    #for words in frequency_list:
+    #    print(words, frequency[words])
 
     for selected_strings in config.STRING_VECTOR:
-        print("results=>>>>>>>>>>>>>>>")
-        print(selected_strings, frequency[selected_strings])
+        #print("results=>>>>>>>>>>>>>>>")
+        #print(selected_strings, frequency[selected_strings])
         print("frequecy of " + selected_strings + ":", frequency[selected_strings] / totalcount)
 
 
-with open("hacked.html") as fp:
-    soup = BeautifulSoup(fp)
+with open("hacked.html", encoding='utf8') as fp:
+    soup = BeautifulSoup(fp, 'html.parser')
+
+title = soup.find(id="1")
+meta = soup.new_tag('div')
+meta['class'] = "panel panel-primary"
+meta['id'] = "11"
+title.insert(0,meta)
+
+title = soup.find(id="11")
+meta = soup.new_tag('div')
+meta['class'] = "panel-heading"
+meta['id'] = "111"
+meta.string = datetime.datetime.now().strftime("%Y-%m-%d")
+title.append(meta)
+
+title = soup.find(id="11")
+meta = soup.new_tag('div')
+meta['class'] = "panel-body"
+meta['id'] = "112"
+title.append(meta)
+
+title = soup.find(id="112")
+table = soup.new_tag('table')
+table['class'] = "table table-striped"
+table['id'] = "1121"
+header = soup.new_tag("tr")
+
+for heading in ["Entity", "Representative Tweet", "Count","ozgur"]:
+    th = soup.new_tag("th")
+    th.string = heading
+    header.append(th)
+table.append(header)
+title.append(table)
+
+
+for name, counts in frequency.items():
+    print(name,":",counts)
+    tr = soup.new_tag("tr")
+    td = soup.new_tag("td")
+    a = soup.new_tag("a")
+    #td["class"] = "table table-striped"
+    a.string = name
+    #td["class"] = "text-left"
+    tr.append(td)
+    
+    for key in ["Entity", "Representative Tweet", "Count"]:
+        td = soup.new_tag("td")
+        td.string = name
+        #td["class"] = "text-left"
+        tr.append(td)
+        table.append(tr)
+    
+title.append(table)
+
+
+
+
+with open("hacked.html","w", encoding='utf8') as fp:
+    fp.write(soup.prettify())
