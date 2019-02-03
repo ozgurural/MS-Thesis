@@ -14,15 +14,18 @@ from bs4 import BeautifulSoup
 
 
 frequency = {}
+entity = {}
 totalcount = 0
 
 def getFrequencyOfWords(row):
     match_pattern = re.findall(r'\b[a-z]{3,15}\b', row[2])
     global totalcount
     for word in match_pattern:
-        count = frequency.get(word,0)
-        frequency[word] = count + 1
-        totalcount = totalcount + 1
+        count = frequency.get(word.lower(),0)
+        if word.lower() in frequency:
+            frequency[word.lower()] = count[0]+1, row[0]
+        else:
+            frequency[word.lower()] = count+1, row[0]
 
 
 conn = sqliteOperations.createConnection(sqliteOperations.database)
@@ -32,14 +35,9 @@ with conn:
     for row in rows:
         getFrequencyOfWords(row)
 
-    #for words in frequency_list:
-    #    print(words, frequency[words])
-
     for selected_strings in config.STRING_VECTOR:
-        #print("results=>>>>>>>>>>>>>>>")
-        #print(selected_strings, frequency[selected_strings])
-        print("frequecy of " + selected_strings + ":", frequency[selected_strings] / totalcount)
-
+        if selected_strings.lower() in frequency:
+            entity[selected_strings.lower()] = frequency[selected_strings.lower()]
 
 with open("hacked.html", encoding='utf8') as fp:
     soup = BeautifulSoup(fp, 'html.parser')
@@ -76,9 +74,8 @@ for heading in ["Entity", "Representative Tweet", "Count"]:
 table.append(header)
 title.append(table)
 
-
 for name, counts in frequency.items():
-    #print(name,":",counts)
+    print(name,":",counts)
     tr = soup.new_tag("tr")
     td = soup.new_tag("td")
     a = soup.new_tag("a")
@@ -95,9 +92,6 @@ for name, counts in frequency.items():
         table.append(tr)
     
 title.append(table)
-
-
-
 
 with open("hacked.html","w", encoding='utf8') as fp:
     fp.write(soup.prettify())
