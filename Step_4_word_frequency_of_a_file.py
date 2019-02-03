@@ -69,7 +69,7 @@ table['class'] = "table table-striped"
 table['id'] = "1121"
 header = soup.new_tag("tr")
 
-for heading in ["Entity", "Representative Tweet", "Count","ozgur"]:
+for heading in ["Entity", "Representative Tweet", "Count"]:
     th = soup.new_tag("th")
     th.string = heading
     header.append(th)
@@ -78,14 +78,14 @@ title.append(table)
 
 
 for name, counts in frequency.items():
-    print(name,":",counts)
+    #print(name,":",counts)
     tr = soup.new_tag("tr")
     td = soup.new_tag("td")
     a = soup.new_tag("a")
     #td["class"] = "table table-striped"
-    a.string = name
+    #td.string = name
     #td["class"] = "text-left"
-    tr.append(td)
+    #tr.append(td)
     
     for key in ["Entity", "Representative Tweet", "Count"]:
         td = soup.new_tag("td")
