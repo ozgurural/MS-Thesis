@@ -23,9 +23,9 @@ def getFrequencyOfWords(row):
     for word in match_pattern:
         count = frequency.get(word.lower(),0)
         if word.lower() in frequency:
-            frequency[word.lower()] = count[0]+1, row[0]
+            frequency[word.lower()] = count[0] + 1, row[0]
         else:
-            frequency[word.lower()] = count+1, row[0]
+            frequency[word.lower()] = count + 1, row[0]
 
 
 conn = sqliteOperations.createConnection(sqliteOperations.database)
@@ -65,32 +65,36 @@ title = soup.find(id="112")
 table = soup.new_tag('table')
 table['class'] = "table table-striped"
 table['id'] = "1121"
-header = soup.new_tag("tr")
+tbody = soup.new_tag("tbody")
 
+header = soup.new_tag("tr")
 for heading in ["Entity", "Representative Tweet", "Count"]:
     th = soup.new_tag("th")
     th.string = heading
     header.append(th)
-table.append(header)
-title.append(table)
+
+tbody.append(header)
 
 for name, counts in frequency.items():
-    print(name,":",counts)
+    #print(name,":",counts)
     tr = soup.new_tag("tr")
     td = soup.new_tag("td")
-    a = soup.new_tag("a")
-    #td["class"] = "table table-striped"
-    #td.string = name
-    #td["class"] = "text-left"
-    #tr.append(td)
+    a = soup.new_tag('a',
+            href = '?section={}&action=whdw&question={}'.format(name,counts),)
+
+    a.sring = name
+    td.append(a)
+
+    tr.append(td)
+
     
     for key in ["Entity", "Representative Tweet", "Count"]:
         td = soup.new_tag("td")
         td.string = name
-        #td["class"] = "text-left"
         tr.append(td)
         table.append(tr)
-    
+
+table.append(tbody)   
 title.append(table)
 
 with open("hacked.html","w", encoding='utf8') as fp:
