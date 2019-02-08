@@ -26,19 +26,30 @@ def createSqliteTable(data):
 
  
 def createSqliteTable(data, source):
-    d = json.loads(data)
     rawTwitterDB = sqlite3.connect("twitterDataDb.sqlite")
     i = datetime.datetime.now()
 
     im = rawTwitterDB.cursor()
     im.execute("""CREATE TABLE IF NOT EXISTS
         rawTwitterDBtable (Name, Date, Text, Status)""")
+    for x in data['List']:
+        print(x['StartDate'])
+        print(x['Title'])
 
-    im.execute("""INSERT INTO rawTwitterDBtable VALUES
-        (\""""+ d['user']['screen_name'] +"""\", 
-        \""""+ i.strftime('%Y_%m_%d') +"""\",
-        \""""+ d['text'] +"""\",
-        0 )""")
+        for fmt in ('%Y-%m-%dT%H:%M:%S.%f', '%Y-%m-%dT%H:%M:%S'):
+            try:
+                 datetime_object = datetime.datetime.strptime(x['StartDate'], fmt)
+            except ValueError:
+                pass
+
+        try: 
+            im.execute("""INSERT INTO rawTwitterDBtable VALUES
+                (\""""+ "hurriyet" +"""\", 
+                \""""+  str(datetime_object.date())  +"""\",
+                \""""+ str(x['Title']) +"""\",
+                0 )""")
+        except BaseException:
+            pass
 
     rawTwitterDB.commit()
     rawTwitterDB.close()

@@ -1,7 +1,6 @@
 from hurriyetApi import HurriyetApi
 
 import sqlite3
-import time
 
 import sqliteOperations
 import config
@@ -21,4 +20,4 @@ try:
     sqliteOperations.createSqliteTable(searchKeyword, "hurriyet")
 except BaseException as e:
     config.logger.error("Error on_data: %s" % str(e))
-    time.sleep(5)
+
