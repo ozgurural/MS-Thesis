@@ -5,8 +5,27 @@ import datetime
 from sqlite3 import Error
 
 database = "twitterDataDb.sqlite"
- 
+
 def createSqliteTable(data):
+    d = json.loads(data)
+    rawTwitterDB = sqlite3.connect("twitterDataDb.sqlite")
+    i = datetime.datetime.now()
+
+    im = rawTwitterDB.cursor()
+    im.execute("""CREATE TABLE IF NOT EXISTS
+        rawTwitterDBtable (Name, Date, Text, Status)""")
+
+    im.execute("""INSERT INTO rawTwitterDBtable VALUES
+        (\""""+ d['user']['screen_name'] +"""\", 
+        \""""+ i.strftime('%Y_%m_%d') +"""\",
+        \""""+ d['text'] +"""\",
+        0 )""")
+
+    rawTwitterDB.commit()
+    rawTwitterDB.close()
+
+ 
+def createSqliteTable(data, source):
     d = json.loads(data)
     rawTwitterDB = sqlite3.connect("twitterDataDb.sqlite")
     i = datetime.datetime.now()

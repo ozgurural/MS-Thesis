@@ -18,7 +18,7 @@ with open('hurriyet.html', 'w', encoding='utf-8') as the_file:
 	the_file.write(str(searchKeyword))
 
 try:
-    sqliteOperations.createSqliteTable(data)
+    sqliteOperations.createSqliteTable(searchKeyword, "hurriyet")
 except BaseException as e:
     config.logger.error("Error on_data: %s" % str(e))
     time.sleep(5)
