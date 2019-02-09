@@ -17,7 +17,7 @@ class MyListener(tweepy.StreamListener):
 
     def on_data(self, data):
         try:
-            sqliteOperations.createSqliteTable(data);
+            sqliteOperations.twitterCreateSqliteTable(data);
             return True
         except BaseException as e:
             config.logger.error("Error on_data: %s" % str(e))

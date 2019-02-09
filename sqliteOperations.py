@@ -3,22 +3,25 @@ import sqlite3
 import json
 import datetime
 from sqlite3 import Error
+import config
 
 database = "twitterDataDb.sqlite"
 
-def createSqliteTable(data):
+def twitterCreateSqliteTable(data):
     d = json.loads(data)
     rawTwitterDB = sqlite3.connect("twitterDataDb.sqlite")
     i = datetime.datetime.now()
 
     im = rawTwitterDB.cursor()
     im.execute("""CREATE TABLE IF NOT EXISTS
-        rawTwitterDBtable (Name, Date, Text, Status)""")
+        rawTwitterDBtable (Source, Date, UserName, Title, Text, Status)""")
 
     im.execute("""INSERT INTO rawTwitterDBtable VALUES
-        (\""""+ d['user']['screen_name'] +"""\", 
-        \""""+ i.strftime('%Y_%m_%d') +"""\",
-        \""""+ d['text'] +"""\",
+        (\"""" + 'twitter' + """\",
+        \"""" + i.strftime('%Y_%m_%d') + """\",
+        \"""" + d['user']['screen_name'] + """\", 
+        \"""" + '--' + """\", 
+        \"""" + d['text'] + """\",
         0 )""")
 
     rawTwitterDB.commit()
@@ -31,7 +34,7 @@ def createSqliteTable(data, source):
 
     im = rawTwitterDB.cursor()
     im.execute("""CREATE TABLE IF NOT EXISTS
-        rawTwitterDBtable (Name, Date, Text, Status)""")
+        rawTwitterDBtable (Source, Date, UserName, Title, Text, Status)""")
     for x in data['List']:
         print(x['StartDate'])
         print(x['Title'])
@@ -44,11 +47,14 @@ def createSqliteTable(data, source):
 
         try: 
             im.execute("""INSERT INTO rawTwitterDBtable VALUES
-                (\""""+ "hurriyet" +"""\", 
-                \""""+  str(datetime_object.date())  +"""\",
-                \""""+ str(x['Title']) +"""\",
+                (\"""" + "hurriyet" + """\", 
+                \"""" + str(datetime_object.date()) + """\",
+                \"""" + '--' + """\",
+                \"""" + str(x['Title']) + """\",
+                \"""" + str(x['Text']) + """\",
                 0 )""")
-        except BaseException:
+        except BaseException as e:
+            config.logger.error("Error on_data: %s" % str(e))
             pass
 
     rawTwitterDB.commit()
@@ -92,7 +98,7 @@ def selectTaskByStatus(conn, status):
     :return:
     """
     cur = conn.cursor()
-    cur.execute("SELECT * FROM rawTwitterDBtable WHERE Status="+status)
+    cur.execute("SELECT * FROM rawTwitterDBtable WHERE Status=" + status)
  
     rows = cur.fetchall()
  
