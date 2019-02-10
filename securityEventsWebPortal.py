@@ -25,7 +25,8 @@ def findInRow(row):
                 rowList[selected_strings.lower()] += 1,row
             else:
                 rowList[selected_strings.lower()] = 1,row
-    
+
+
 def securityEventsWebPortal():
     conn = sqliteOperations.createConnection(sqliteOperations.database)
     with conn:
@@ -33,6 +34,8 @@ def securityEventsWebPortal():
         rows = sqliteOperations.selectTaskByStatus(conn,"0")
         for row in rows:
             findInRow(row)
+
+        sqliteOperations.UpdateTaskByStatus(conn,"2")
 
     with open("hacked.html", encoding='utf8') as fp:
         soup = BeautifulSoup(fp, 'html.parser')
@@ -97,3 +100,5 @@ def securityEventsWebPortal():
 
     with open("hacked.html","w", encoding='utf8') as fp:
         fp.write(soup.prettify())
+
+securityEventsWebPortal()

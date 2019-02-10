@@ -107,6 +107,16 @@ def selectTaskByStatus(conn, status):
 
     return rows
 
+def UpdateTaskByStatus(conn, status):
+    """
+    Query tasks by priority
+    :param conn: the Connection object
+    :param priority:
+    :return:
+    """
+    cur = conn.cursor()
+    cur.execute("UPDATE rawTwitterDBtable SET Status ="+status+" WHERE Status=\"0\"")
+
  
 """ 
 def main():
