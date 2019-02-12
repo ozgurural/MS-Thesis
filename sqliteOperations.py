@@ -36,8 +36,8 @@ def createSqliteTable(data, source):
     im.execute("""CREATE TABLE IF NOT EXISTS
         rawTwitterDBtable (Source, Date, UserName, Title, Text, Status)""")
     for x in data['List']:
-        print(x['StartDate'])
-        print(x['Title'])
+        #print(x['StartDate'])
+        #print(x['Title'])
 
         for fmt in ('%Y-%m-%dT%H:%M:%S.%f', '%Y-%m-%dT%H:%M:%S'):
             try:
@@ -85,9 +85,7 @@ def select_all_tasks(conn):
     cur.execute("SELECT * FROM rawTwitterDBtable")
  
     rows = cur.fetchall()
- 
-    for row in rows:
-        print(row)
+
  
  
 def selectTaskByStatus(conn, status):

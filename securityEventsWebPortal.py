@@ -29,7 +29,7 @@ def findInRow(row):
 def securityEventsWebPortal():
     conn = sqliteOperations.createConnection(sqliteOperations.database)
     with conn:
-        print("1. Query task by Status:")
+        #print("1. Query task by Status:")
         rows = sqliteOperations.selectTaskByStatus(conn,"0")
         for row in rows:
             findInRow(row)
@@ -73,7 +73,6 @@ def securityEventsWebPortal():
     tbody.append(header)
 
     for name, tuple in rowList.items():
-        #print(name,":",counts)
         td = soup.new_tag('td')
         tr = soup.new_tag("tr")
         a = soup.new_tag('a', href = '?section={}&action=whdw&question={}'.format(name,tuple),)
@@ -100,8 +99,8 @@ def securityEventsWebPortal():
     with open("hacked.html","w", encoding='utf8') as fp:
         fp.write(soup.prettify())
 
-    s.enter(60, 1, securityEventsWebPortal, (sc,))
+    s.enter(60, 1, securityEventsWebPortal)
     rowList.clear()
 
-s.enter(60, 1, securityEventsWebPortal, (s,))
+s.enter(60, 1, securityEventsWebPortal)
 s.run()
