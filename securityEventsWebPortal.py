@@ -12,11 +12,10 @@ import sqliteOperations
 
 from bs4 import BeautifulSoup
 
+import sched, time
+s = sched.scheduler(time.time, time.sleep)
 
-frequency = {}
-entity = {}
 rowList = {}
-totalcount = 0
 
 def findInRow(row):
     for selected_strings in config.STRING_VECTOR:
@@ -101,4 +100,8 @@ def securityEventsWebPortal():
     with open("hacked.html","w", encoding='utf8') as fp:
         fp.write(soup.prettify())
 
-securityEventsWebPortal()
+    s.enter(60, 1, securityEventsWebPortal, (sc,))
+    rowList.clear()
+
+s.enter(60, 1, securityEventsWebPortal, (s,))
+s.run()
