@@ -5,11 +5,11 @@ import datetime
 from sqlite3 import Error
 import config
 
-database = "twitterDataDb.sqlite"
+database = "securityEventsDataBase.sqlite"
 
 def twitterCreateSqliteTable(data):
     d = json.loads(data)
-    rawTwitterDB = sqlite3.connect("twitterDataDb.sqlite")
+    rawTwitterDB = sqlite3.connect(database)
     i = datetime.datetime.now()
 
     im = rawTwitterDB.cursor()
@@ -29,7 +29,7 @@ def twitterCreateSqliteTable(data):
 
  
 def createSqliteTable(data, source):
-    rawTwitterDB = sqlite3.connect("twitterDataDb.sqlite")
+    rawTwitterDB = sqlite3.connect(database)
     i = datetime.datetime.now()
 
     im = rawTwitterDB.cursor()
@@ -116,22 +116,3 @@ def UpdateTaskByStatus(conn, status):
     """
     cur = conn.cursor()
     cur.execute("UPDATE rawTwitterDBtable SET Status ="+status+" WHERE Status=\"0\"")
-
- 
-""" 
-def main():
-    database = "twitterDataDb.sqlite"
- 
-    # create a database connection
-    conn = create_connection(database)
-    with conn:
-        print("1. Query task by priority:")
-        select_task_by_priority(conn,1)
- 
-        print("2. Query all tasks")
-        select_all_tasks(conn)
- 
- 
-if __name__ == '__main__':
-    main()
-"""
