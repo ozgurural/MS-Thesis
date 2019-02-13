@@ -11,11 +11,14 @@ import config
 import sqliteOperations
 
 from bs4 import BeautifulSoup
-
-import sched, time
-s = sched.scheduler(time.time, time.sleep)
+import time
 
 rowList = {}
+
+def test():
+    while True:
+        securityEventsWebPortalStart()
+        time.sleep(60)
 
 def findInRow(row):
     for selected_strings in config.STRING_VECTOR:
@@ -26,10 +29,11 @@ def findInRow(row):
                 rowList[selected_strings.lower()] = 1,row
 
 
-def securityEventsWebPortal():
+def securityEventsWebPortalStart():
+
     conn = sqliteOperations.createConnection(sqliteOperations.database)
     with conn:
-        #print("1. Query task by Status:")
+        #print("1.  Query task by Status:")
         rows = sqliteOperations.selectTaskByStatus(conn,"0")
         for row in rows:
             findInRow(row)
@@ -101,6 +105,5 @@ def securityEventsWebPortal():
 
     with open("hacked.html","w", encoding='utf8') as fp:
         fp.write(soup.prettify())
-
-    s.enter(60, 1, securityEventsWebPortal)
+       
     rowList.clear()
