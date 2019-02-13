@@ -81,7 +81,10 @@ def securityEventsWebPortal():
         tr.append(td)
 
         td = soup.new_tag("td")
-        td.string = tuple[1][2]
+        if tuple[1][3] == "--":
+            td.string = tuple[1][4]
+        else:
+            td.string = tuple[1][3]
         tr.append(td)
         tbody.append(tr)
 
@@ -101,6 +104,3 @@ def securityEventsWebPortal():
 
     s.enter(60, 1, securityEventsWebPortal)
     rowList.clear()
-
-s.enter(60, 1, securityEventsWebPortal)
-s.run()

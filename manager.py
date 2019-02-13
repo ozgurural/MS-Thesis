@@ -6,16 +6,16 @@ from securityEventsWebPortal import securityEventsWebPortal
 
 
 if __name__ == '__main__':
-    p = Process(target=twitterStreamToDb)
+    p1 = Process(target=twitterStreamToDb)
 
     p2 = Process(target=hurriyetApiToDb)    
 
     p3 = Process(target=securityEventsWebPortal)    
 
-    p.start()
+    p1.start()
     p2.start()
     p3.start()
 
-    p.join()
+    p1.join()
     p2.join()
     p3.join()
