@@ -124,4 +124,4 @@ class HurriyetApi:
             self.lastJson = json.loads(r.text)
             return self.lastJson
         else:
-            return "Request return " + str(r.status_code) +  " error!"
+            return "Request return " + str(r.status_code) + " error!"

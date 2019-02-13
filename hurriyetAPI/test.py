@@ -12,10 +12,6 @@ writer = api.searchWriter("Adil")
 articles = api.listArticles(42, 3)
 searchKeyword = api.search("siber")
 
-
-with open('hurriyet.html', 'w', encoding='utf-8') as the_file:
-	the_file.write(str(searchKeyword))
-
 try:
     sqliteOperations.createSqliteTable(data)
 except BaseException as e:
