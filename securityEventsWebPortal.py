@@ -39,7 +39,7 @@ def securityEventsWebPortalStart():
         for row in rows:
             findInRow(row)
 
-        sqliteOperations.UpdateTaskByStatus(conn,"2")
+        #sqliteOperations.UpdateTaskByStatus(conn,"2")
 
     with open("hacked.html", encoding='utf8') as fp:
         soup = BeautifulSoup(fp, 'html.parser')
