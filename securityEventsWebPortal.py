@@ -23,7 +23,7 @@ def test():
 def findInRow(row):
     for selected_strings in config.STRING_VECTOR:
         ##bug is here
-        if selected_strings.lower() in row[2]:
+        if selected_strings.lower() in row[4].lower():
             if selected_strings.lower() in rowList:
                 rowList[selected_strings.lower()] += 1,row
             else:
