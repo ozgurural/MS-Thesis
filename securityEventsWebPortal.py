@@ -25,7 +25,7 @@ def findInRow(row):
         ##bug is here
         if selected_strings.lower() in row[4].lower():
             if selected_strings.lower() in rowList:
-                rowList[selected_strings.lower()] += 1,row
+                rowList[selected_strings.lower()] = rowList[selected_strings.lower()][0]+1,row
             else:
                 rowList[selected_strings.lower()] = 1,row
 
