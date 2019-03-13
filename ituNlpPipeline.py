@@ -73,6 +73,15 @@ class PipelineCaller(object):
         return response.read().decode(config.PIPELINE_ENCODING)
 
 def main():
+    # create a database connection
+    conn = sqliteOperations.createConnection(sqliteOperations.database)
+    with conn:
+        rows = sqliteOperations.selectTaskByStatus(conn,"0")
+        for row in rows:
+            findInRow(row)
+
+    sqliteOperations.UpdateTaskByStatus(conn,"1")
+    
     with open(config.STEP_3_INPUT_DIR, encoding=config.PIPELINE_ENCODING) as input_file:
         text = input_file.read()
     
@@ -88,19 +97,6 @@ def main():
     config.logger.info(REQUEST_URL)
 
     start_time = time.time()
-    
-    #####
-
- 
-    # create a database connection
-    conn = sqliteOperations.createConnection(sqliteOperations.database)
-    with conn:
-        print("1. Query task by Status:")
-        rows = sqliteOperations.selectTaskByStatus(conn,"0")
- 
-    #####
-
-
 
     caller = PipelineCaller(config.DEFAULT_TOOL, text, config.ITU_NLP_API_TOKEN, 'sentence')
     with open(config.STEP_4_INPUT_DIR, 'w', encoding = config.PIPELINE_ENCODING) as output_file:
