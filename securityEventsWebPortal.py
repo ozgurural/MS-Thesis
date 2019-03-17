@@ -44,40 +44,47 @@ def securityEventsWebPortalStart():
     with open("hacked.html", encoding='utf8') as fp:
         soup = BeautifulSoup(fp, 'html.parser')
 
-    title = soup.find(id="1")
-    meta = soup.new_tag('div')
-    meta['class'] = "panel panel-primary"
-    meta['id'] = "11"
-    title.insert(0,meta)
 
-    title = soup.find(id="11")
-    meta = soup.new_tag('div')
-    meta['class'] = "panel-heading"
-    meta['id'] = "111"
-    meta.string = datetime.datetime.now().strftime("%Y-%m-%d")
-    title.append(meta)
-
-    title = soup.find(id="11")
-    meta = soup.new_tag('div')
-    meta['class'] = "panel-body"
-    meta['id'] = "112"
-    title.append(meta)
-
-    title = soup.find(id="112")
-    table = soup.new_tag('table')
-    table['class'] = "table table-striped"
-    table['id'] = "1121"
-
-    tbody = soup.new_tag("tbody")
-    header = soup.new_tag("tr")
-    for heading in ["Entity", "Representative Tweet", "Count"]:
-        th = soup.new_tag("th")
-        th.string = heading
-        header.append(th)
-
-    tbody.append(header)
 
     for name, tuple in rowList.items():
+        ###
+
+
+        findCheck = soup.find(id=tuple[1][1])
+        if findCheck == None:
+            title = soup.find(id="1")
+            meta = soup.new_tag('div')
+            meta['class'] = "panel panel-primary"
+            meta['id'] = tuple[1][1]
+            title.insert(0,meta)
+
+            title = soup.find(id=tuple[1][1])
+            meta = soup.new_tag('div')
+            meta['class'] = "panel-heading"
+            meta['id'] = tuple[1][1]
+            meta.string = tuple[1][1]
+            title.append(meta)
+
+            title = soup.find(id=tuple[1][1])
+            meta = soup.new_tag('div')
+            meta['class'] = "panel-body"
+            meta['id'] = "112"
+            title.append(meta)
+
+            title = soup.find(id="112")
+            table = soup.new_tag('table')
+            table['class'] = "table table-striped"
+            table['id'] = "1121"
+
+            tbody = soup.new_tag("tbody")
+            header = soup.new_tag("tr")
+            for heading in ["Entity", "Representative Tweet", "Count"]:
+                th = soup.new_tag("th")
+                th.string = heading
+                header.append(th)
+
+            tbody.append(header)
+       
         td = soup.new_tag('td')
         tr = soup.new_tag("tr")
         a = soup.new_tag('a', href = '?section={}&action=whdw&question={}'.format(name,tuple),)
@@ -100,9 +107,10 @@ def securityEventsWebPortalStart():
         td.append(span)
         tr.append(td)
         tbody.append(tr)
-
-    table.append(tbody)   
-    title.append(table)
+            
+        table.append(tbody)   
+        title.append(table)
+        ###
 
     with open("hacked.html","w", encoding='utf8') as fp:
         fp.write(soup.prettify())
