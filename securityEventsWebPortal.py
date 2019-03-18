@@ -22,7 +22,6 @@ def test():
 
 def findInRow(row):
     for selected_strings in config.STRING_VECTOR:
-        ##bug is here
         if selected_strings.lower() in row[4].lower():
             if selected_strings.lower() in rowList:
                 rowList[selected_strings.lower()] = rowList[selected_strings.lower()][0]+1,row
@@ -34,12 +33,11 @@ def securityEventsWebPortalStart():
 
     conn = sqliteOperations.createConnection(sqliteOperations.database)
     with conn:
-        #print("1.  Query task by Status:")
         rows = sqliteOperations.selectTaskByStatus(conn,"0")
         for row in rows:
             findInRow(row)
 
-        #sqliteOperations.UpdateTaskByStatus(conn,"2")
+        sqliteOperations.UpdateTaskByStatus(conn,"2")
 
     with open("hacked.html", encoding='utf8') as fp:
         soup = BeautifulSoup(fp, 'html.parser')
@@ -48,8 +46,6 @@ def securityEventsWebPortalStart():
 
     for name, tuple in rowList.items():
         ###
-
-
         findCheck = soup.find(id=tuple[1][1])
         if findCheck == None:
             title = soup.find(id="1")
@@ -61,22 +57,24 @@ def securityEventsWebPortalStart():
             title = soup.find(id=tuple[1][1])
             meta = soup.new_tag('div')
             meta['class'] = "panel-heading"
-            meta['id'] = tuple[1][1]
+            meta['id'] = "panel-heading::"+ tuple[1][1]
             meta.string = tuple[1][1]
             title.append(meta)
 
             title = soup.find(id=tuple[1][1])
             meta = soup.new_tag('div')
             meta['class'] = "panel-body"
-            meta['id'] = "112"
+            meta['id'] = "panel-body::"+ tuple[1][1]
             title.append(meta)
 
-            title = soup.find(id="112")
+            title = soup.find(id="panel-body::"+ tuple[1][1])
             table = soup.new_tag('table')
             table['class'] = "table table-striped"
-            table['id'] = "1121"
+            table['id'] = "table table-striped"+ tuple[1][1]
+            title.append(table)
 
             tbody = soup.new_tag("tbody")
+            tbody['id'] = "tbody::"+ tuple[1][1]
             header = soup.new_tag("tr")
             for heading in ["Entity", "Representative Tweet", "Count"]:
                 th = soup.new_tag("th")
@@ -84,7 +82,11 @@ def securityEventsWebPortalStart():
                 header.append(th)
 
             tbody.append(header)
-       
+        else: 
+            tbody = soup.find(id="tbody::"+ tuple[1][1])
+            table = soup.find(id="table table-striped"+ tuple[1][1])
+            title = soup.find(id="panel-body::"+ tuple[1][1])
+
         td = soup.new_tag('td')
         tr = soup.new_tag("tr")
         a = soup.new_tag('a', href = '?section={}&action=whdw&question={}'.format(name,tuple),)
