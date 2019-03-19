@@ -76,7 +76,7 @@ def securityEventsWebPortalStart():
             tbody = soup.new_tag("tbody")
             tbody['id'] = "tbody::" + tuple[1][1]
             header = soup.new_tag("tr")
-            for heading in ["Entity", "Representative Tweet", "Count"]:
+            for heading in ["Entity", "Representative News Title or Tweet", "Count"]:
                 th = soup.new_tag("th")
                 th.string = heading
                 header.append(th)
