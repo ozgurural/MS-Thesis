@@ -1,0 +1,43 @@
+Id,Name,Shape Library,Page ID,Contained By,Group,Line Source,Line Destination,Source Arrow,Destination Arrow,Text Area 1
+1,Page,,,,,,,,,State Diagram Example
+2,MinimalTextBlock,Default,1,,,,,,,N
+3,MinimalTextBlock,Default,1,,,,,,,İTÜ NLP API
+4,Rounded Rectangle Container,Flowchart Shapes,1,,39,,,,,
+5,Text,Default,1,4,39,,,,,"Tutorials (Hold Shift + ⌘ or Ctrl, then click)"
+6,Button,UI Mockups,1,4,39,,,,,Watch Lucidchart basic tutorials
+7,Text,Default,1,4,39,,,,,Description
+8,Text,Default,1,4,39,,,,,"A state diagram is a type of behavioral diagram used to track an object's possible states if an event were to occur. Used in computer science, these diagrams represent objects with circles and transitions with lines. 
+
+Use this template to describe your system's behaviors and gather insights, such as an object's flow from its current state to the next state, which is illustrated by the transitions.
+ To customize this template, click on any shape and type the information you would like to include. Add, remove, and arrange shapes as needed."
+9,Button,UI Mockups,1,4,39,,,,,"Create your own (Hold Shift + ⌘ or Ctrl, then click)"
+10,User Image,User Images,1,4,39,,,,,
+11,User Image,User Images,1,,,,,,,
+12,User Image,User Images,1,,,,,,,
+13,User Image,User Images,1,,,,,,,
+14,Process,Flowchart Shapes,1,,,,,,,New Data Sources Can be Added
+15,Preparation,Flowchart Shapes,1,,,,,,,Streaming Data Formatter For Twitter 
+16,Preparation,Flowchart Shapes,1,,,,,,,Streaming Data Formatter For Hürriyet 
+17,Preparation,Flowchart Shapes,1,,,,,,,Configuration File
+18,User Image,User Images,1,,,,,,,
+19,Process,Flowchart Shapes,1,,,,,,,Cybersecurity Event Detection
+20,User Image,User Images,1,,,,,,,
+21,User Image,User Images,1,,,,,,,
+22,MinimalTextBlock,Default,1,,,,,,,Database
+23,MinimalTextBlock,Default,1,,,,,,,User Interface
+24,MinimalTextBlock,Default,1,,,,,,,Security Analyst
+25,Line,,1,,,11,15,None,Arrow,Tweets
+26,Line,,1,,,14,18,None,Arrow,
+27,Line,,1,,,14,2,None,Arrow,
+28,Line,,1,,,12,16,None,Arrow,News
+29,Line,,1,,,16,18,None,Arrow,Formatted Text
+30,Line,,1,,,17,11,None,Arrow,
+31,Line,,1,,,17,12,None,Arrow,
+32,Line,,1,,,17,14,None,Arrow,
+33,Line,,1,,,15,18,None,Arrow,Formatted Text
+34,Line,,1,,,18,,None,Arrow,
+35,Line,,1,,,13,18,Arrow,Arrow,Normalization
+36,Line,,1,,,19,22,Arrow,None,Texts
+37,Line,,1,,,19,20,None,Arrow,
+38,Line,,1,,,21,23,Arrow,None,
+39,Group 1,,1,,,,,,,
