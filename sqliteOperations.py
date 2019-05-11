@@ -5,6 +5,8 @@ import datetime
 from sqlite3 import Error
 import config
 
+from bs4 import BeautifulSoup
+
 database = "securityEventsDataBase.sqlite"
 
 def twitterCreateSqliteTable(data):
@@ -18,10 +20,10 @@ def twitterCreateSqliteTable(data):
 
     im.execute("""INSERT INTO rawTwitterDBtable VALUES
         (\"""" + 'twitter' + """\",
-        \"""" + i.strftime('%Y_%m_%d') + """\",
+        \"""" + i.strftime('%Y-%m-%d') + """\",
         \"""" + d['user']['screen_name'] + """\", 
         \"""" + '--' + """\", 
-        \"""" + d['text'] + """\",
+        \"""" + BeautifulSoup(d['text'], "lxml").text + """\",
         0 )""")
 
     rawTwitterDB.commit()
@@ -45,13 +47,16 @@ def createSqliteTable(data, source):
             except ValueError:
                 pass
 
+        if(datetime_object.year < 2019 ):
+            continue
+
         try: 
             im.execute("""INSERT INTO rawTwitterDBtable VALUES
                 (\"""" + "hurriyet" + """\", 
                 \"""" + str(datetime_object.date()) + """\",
                 \"""" + '--' + """\",
                 \"""" + str(x['Title']) + """\",
-                \"""" + str(x['Text']) + """\",
+                \"""" + BeautifulSoup(x['Text'], "lxml").text + """\",
                 0 )""")
         except BaseException as e:
             config.logger.error("Error on_data: %s" % str(e))
@@ -113,4 +118,15 @@ def UpdateTaskByStatus(conn, status):
     :return:
     """
     cur = conn.cursor()
-    cur.execute("UPDATE rawTwitterDBtable SET Status ="+status+" WHERE Status=\"0\"")
+    cur.execute("UPDATE rawTwitterDBtable SET Status =" + status + " WHERE Status=\"0\"")
+
+def UpdateTextByStatusWithItuNlpApi(conn, status, textBefore, textAfter):
+    """
+    Query tasks by priority
+    :param conn: the Connection object
+    :param priority:
+    :return:
+    """
+    cur = conn.cursor()
+    cur.execute("UPDATE rawTwitterDBtable SET Status =" + status + " WHERE Status=\"2\" AND Text=" + textBefore)
+    cur.execute("UPDATE rawTwitterDBtable SET Text =" + textAfter + " WHERE Text=" + textBefore)

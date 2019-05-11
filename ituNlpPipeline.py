@@ -11,6 +11,16 @@ import urllib.request
 import config
 import sqliteOperations
 
+rowList = {}
+
+def findInRow(row):
+    for selected_strings in config.STRING_VECTOR:
+        if selected_strings.lower() in row[4].lower():
+            if selected_strings.lower() in rowList:
+                rowList[selected_strings.lower()] = rowList[selected_strings.lower()][0] + 1,row
+            else:
+                rowList[selected_strings.lower()] = 1,row
+
 
 class PipelineCaller(object):
 
@@ -76,35 +86,32 @@ def main():
     # create a database connection
     conn = sqliteOperations.createConnection(sqliteOperations.database)
     with conn:
-        rows = sqliteOperations.selectTaskByStatus(conn,"0")
+        rows = sqliteOperations.selectTaskByStatus(conn,"2")
         for row in rows:
-            findInRow(row)
+            config.logger.info(row[4])
+            caller = PipelineCaller(config.DEFAULT_TOOL, row[4], config.ITU_NLP_API_TOKEN, 'sentence')
+            sqliteOperations.UpdateTextByStatusWithItuNlpApi(conn,"1", row[4], caller.call())
 
-    sqliteOperations.UpdateTaskByStatus(conn,"1")
-    
-    with open(config.STEP_3_INPUT_DIR, encoding=config.PIPELINE_ENCODING) as input_file:
-        text = input_file.read()
-    
+    """
+    text = "beim adim ozgüür"
     config.logger.info(text)
     config.logger.info(config.ITU_NLP_API_TOKEN)
-    config.logger.info(config.STEP_4_INPUT_DIR)
     config.logger.info(config.API_URL)
     config.logger.info(config.PIPELINE_ENCODING)
-    config.logger.info(config.STEP_3_INPUT_DIR)
-    config.logger.info(config.DEFAULT_TOOL)
+
 
     REQUEST_URL = config.API_URL + "?" + "tool=" + config.DEFAULT_TOOL + "&input=" + "MERHABAAAAAA" + "&token=" + config.ITU_NLP_API_TOKEN
     config.logger.info(REQUEST_URL)
+    config.logger.info(config.DEFAULT_TOOL)
 
     start_time = time.time()
 
     caller = PipelineCaller(config.DEFAULT_TOOL, text, config.ITU_NLP_API_TOKEN, 'sentence')
-    with open(config.STEP_4_INPUT_DIR, 'w', encoding = config.PIPELINE_ENCODING) as output_file:
-        output_file.write('{}\n'.format(caller.call()))
-
+    config.logger.info(caller.call())
     process_time = time.time() - start_time
 
     config.logger.info("[DONE] It took {0:.0f} seconds to process whole text.".format(process_time))
+    """
 
 if __name__ == '__main__':
 	main()
