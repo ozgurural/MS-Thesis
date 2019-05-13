@@ -11,35 +11,30 @@ database = "securityEventsDataBase.sqlite"
 
 def twitterCreateSqliteTable(data):
     d = json.loads(data)
-    rawTwitterDB = sqlite3.connect(database)
+    databaseTable = sqlite3.connect(database)
     i = datetime.datetime.now()
 
-    im = rawTwitterDB.cursor()
+    im = databaseTable.cursor()
     im.execute("""CREATE TABLE IF NOT EXISTS
-        rawTwitterDBtable (Source, Date, UserName, Title, Text, Status)""")
+        databaseTable (Source, Date, UserName, Title, Text PRIMARY KEY, Status)""")
 
-    im.execute("""INSERT INTO rawTwitterDBtable VALUES
-        (\"""" + 'twitter' + """\",
-        \"""" + i.strftime('%Y-%m-%d') + """\",
-        \"""" + d['user']['screen_name'] + """\", 
-        \"""" + '--' + """\", 
-        \"""" + BeautifulSoup(d['text'], "lxml").text + """\",
-        0 )""")
+    insert = "INSERT INTO DataBaseTable VALUES (\"twitter\", ?, ?, '--', ?, 0)"
+    query = ( i.strftime('%Y-%m-%d') , d['user']['screen_name'], BeautifulSoup(d['text'], "lxml").text)
 
-    rawTwitterDB.commit()
-    rawTwitterDB.close()
+    im.execute(insert, query)
+
+    databaseTable.commit()
+    databaseTable.close()
 
  
 def createSqliteTable(data, source):
-    rawTwitterDB = sqlite3.connect(database)
+    databaseTable = sqlite3.connect(database)
     i = datetime.datetime.now()
 
-    im = rawTwitterDB.cursor()
+    im = databaseTable.cursor()
     im.execute("""CREATE TABLE IF NOT EXISTS
-        rawTwitterDBtable (Source, Date, UserName, Title, Text, Status)""")
+        databaseTable ( Source, Date, UserName, Title, Text PRIMARY KEY, Status)""")
     for x in data['List']:
-        #print(x['StartDate'])
-        #print(x['Title'])
 
         for fmt in ('%Y-%m-%dT%H:%M:%S.%f', '%Y-%m-%dT%H:%M:%S'):
             try:
@@ -47,23 +42,20 @@ def createSqliteTable(data, source):
             except ValueError:
                 pass
 
-        if(datetime_object.year < 2019 ):
+        if(datetime_object.year < 2019):
             continue
 
+        insert = "INSERT INTO databaseTable VALUES (\"hurriyet\", ?, '--', ?, ?, 0)"
+        query = ( str(datetime_object.date()), str(x['Title']), BeautifulSoup(x['Text'], "lxml").text)
+
         try: 
-            im.execute("""INSERT INTO rawTwitterDBtable VALUES
-                (\"""" + "hurriyet" + """\", 
-                \"""" + str(datetime_object.date()) + """\",
-                \"""" + '--' + """\",
-                \"""" + str(x['Title']) + """\",
-                \"""" + BeautifulSoup(x['Text'], "lxml").text + """\",
-                0 )""")
+            im.execute(insert, query)
         except BaseException as e:
             config.logger.error("Error on_data: %s" % str(e))
             pass
 
-    rawTwitterDB.commit()
-    rawTwitterDB.close()
+    databaseTable.commit()
+    databaseTable.close()
  
 def createConnection(db_file):
     """ create a database connection to the SQLite database
@@ -80,19 +72,6 @@ def createConnection(db_file):
     return None
  
  
-def select_all_tasks(conn):
-    """
-    Query all rows in the tasks table
-    :param conn: the Connection object
-    :return:
-    """
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM rawTwitterDBtable")
- 
-    rows = cur.fetchall()
-
- 
- 
 def selectTaskByStatus(conn, status):
     """
     Query tasks by priority
@@ -101,7 +80,9 @@ def selectTaskByStatus(conn, status):
     :return:
     """
     cur = conn.cursor()
-    cur.execute("SELECT * FROM rawTwitterDBtable WHERE Status=" + status)
+    cur.execute("SELECT * FROM databaseTable WHERE Status=" + status)
+    #select = "SELECT * FROM databaseTable WHERE Status= '0'"
+    #cur.execute(select)
  
     rows = cur.fetchall()
  
@@ -118,7 +99,11 @@ def UpdateTaskByStatus(conn, status):
     :return:
     """
     cur = conn.cursor()
-    cur.execute("UPDATE rawTwitterDBtable SET Status =" + status + " WHERE Status=\"0\"")
+
+    cur.execute("UPDATE rawTwitterDBtable SET Status =" + status + " WHERE Status=\"1\"")
+    
+    #update_1 = "UPDATE databaseTable SET Status = ? WHERE Status = '1'" 
+    #cur.execute(update_1, status)
 
 def UpdateTextByStatusWithItuNlpApi(conn, status, textBefore, textAfter):
     """
@@ -127,6 +112,13 @@ def UpdateTextByStatusWithItuNlpApi(conn, status, textBefore, textAfter):
     :param priority:
     :return:
     """
+    update_1 = """UPDATE databaseTable SET Status = ? WHERE Status = '0' AND Text = ? """ 
+    update_2 = """UPDATE databaseTable SET Text = ? WHERE Text = ? """
+
     cur = conn.cursor()
-    cur.execute("UPDATE rawTwitterDBtable SET Status =" + status + " WHERE Status=\"2\" AND Text=" + textBefore)
-    cur.execute("UPDATE rawTwitterDBtable SET Text =" + textAfter + " WHERE Text=" + textBefore)
+    query_input_1 = (status, textBefore)
+    query_input_2 = (textAfter, textBefore)
+
+    cur.execute(update_1, query_input_1)
+    cur.execute(update_2, query_input_2)
+    

@@ -82,18 +82,9 @@ class PipelineCaller(object):
         response = urllib.request.urlopen(config.API_URL, params)
         return response.read().decode(config.PIPELINE_ENCODING)
 
-def main():
-    # create a database connection
-    conn = sqliteOperations.createConnection(sqliteOperations.database)
-    with conn:
-        rows = sqliteOperations.selectTaskByStatus(conn,"2")
-        for row in rows:
-            config.logger.info(row[4])
-            caller = PipelineCaller(config.DEFAULT_TOOL, row[4], config.ITU_NLP_API_TOKEN, 'sentence')
-            sqliteOperations.UpdateTextByStatusWithItuNlpApi(conn,"1", row[4], caller.call())
-
-    """
-    text = "beim adim ozgüür"
+"""
+def startItuNlpApi():   
+    text = "beniim adiim ozgüür"
     config.logger.info(text)
     config.logger.info(config.ITU_NLP_API_TOKEN)
     config.logger.info(config.API_URL)
@@ -111,7 +102,20 @@ def main():
     process_time = time.time() - start_time
 
     config.logger.info("[DONE] It took {0:.0f} seconds to process whole text.".format(process_time))
-    """
 
-if __name__ == '__main__':
-	main()
+"""
+def startItuNlpApi():
+    # create a database connection
+    conn = sqliteOperations.createConnection(sqliteOperations.database)
+    with conn:
+        while True:
+            rows = sqliteOperations.selectTaskByStatus(conn,'0')
+            for row in rows:
+                config.logger.info(row[4])
+                caller = PipelineCaller(config.DEFAULT_TOOL, row[4], config.ITU_NLP_API_TOKEN, 'sentence')
+                sqliteOperations.UpdateTextByStatusWithItuNlpApi(conn,"1", row[4], caller.call())
+                time.sleep(10)
+            time.sleep(60)
+
+
+startItuNlpApi()

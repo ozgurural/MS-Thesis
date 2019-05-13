@@ -15,9 +15,9 @@ import time
 
 rowList = {}
 
-def test():
+def securityEventsWebPortalStart():
     while True:
-        securityEventsWebPortalStart()
+        start()
         time.sleep(60)
 
 def findInRow(row):
@@ -29,11 +29,11 @@ def findInRow(row):
                 rowList[selected_strings.lower()] = 1,row
 
 
-def securityEventsWebPortalStart():
+def start():
 
     conn = sqliteOperations.createConnection(sqliteOperations.database)
     with conn:
-        rows = sqliteOperations.selectTaskByStatus(conn,"0")
+        rows = sqliteOperations.selectTaskByStatus(conn,"1")
         for row in rows:
             findInRow(row)
 

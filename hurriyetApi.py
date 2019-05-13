@@ -104,7 +104,7 @@ class HurriyetApi:
         return self.sender('/writers/{}'.format(id))
             ########## END Single Methods ##########
 
-    def sender(self, endpoint, total=1, skip=None, select=-1):
+    def sender(self, endpoint, total=10, skip=None, select=-1):
         params = {'apikey': self.apikey, '$select': select, '$top': total, '$skip': skip }
         return self.SendRequest(endpoint, params=params)
 

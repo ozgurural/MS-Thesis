@@ -28,7 +28,7 @@ class MyListener(tweepy.StreamListener):
         config.logger.error(status)
         return True
 
-def twitterStreamToDb():
+def startTwitterStreamToDb():
     config.logger.info(config.STEP_1_QUERY)
     auth = tweepy.OAuthHandler(config.CONSUMER_KEY, config.CONSUMER_SECRET)
     auth.set_access_token(config.ACCESS_TOKEN, config.ACESS_SECRET)
