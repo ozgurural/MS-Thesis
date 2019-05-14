@@ -80,7 +80,7 @@ def selectTaskByStatus(conn, status):
     :return:
     """
     cur = conn.cursor()
-    cur.execute("SELECT * FROM databaseTable WHERE Status=" + status)
+    cur.execute("SELECT * FROM databaseTable WHERE Status=\"1\"")
     #select = "SELECT * FROM databaseTable WHERE Status= '0'"
     #cur.execute(select)
  
@@ -89,6 +89,7 @@ def selectTaskByStatus(conn, status):
     #for row in rows:
     #    print(row)
 
+    conn.commit()
     return rows
 
 def UpdateTaskByStatus(conn, status):
@@ -100,12 +101,10 @@ def UpdateTaskByStatus(conn, status):
     """
     cur = conn.cursor()
 
-    cur.execute("UPDATE databaseTable SET Status =" + status + " WHERE Status=1")
+    update_1 = "UPDATE databaseTable SET Status = ?  WHERE Status = '1'"
+    cur.execute(update_1, status)
 
     conn.commit()
-    
-    #update_1 = "UPDATE databaseTable SET Status = ?  WHERE Status = '1'"
-    #cur.execute(update_1, status)
 
 def UpdateTextByStatusWithItuNlpApi(conn, status, textBefore, textAfter):
     """
