@@ -80,9 +80,9 @@ def selectTaskByStatus(conn, status):
     :return:
     """
     cur = conn.cursor()
-    cur.execute("SELECT * FROM databaseTable WHERE Status=\"1\"")
-    #select = "SELECT * FROM databaseTable WHERE Status= '0'"
-    #cur.execute(select)
+    #cur.execute("SELECT * FROM databaseTable WHERE Status=\"0\" ")
+    select = "SELECT * FROM databaseTable WHERE Status= ?"
+    cur.execute(select,status)
  
     rows = cur.fetchall()
  

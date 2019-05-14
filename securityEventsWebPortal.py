@@ -33,12 +33,13 @@ def start():
 
     conn = sqliteOperations.createConnection(sqliteOperations.database)
     with conn:
-        rows = sqliteOperations.selectTaskByStatus(conn,"1")
+        rows = sqliteOperations.selectTaskByStatus(conn,'1')
         for row in rows:
             findInRow(row)
 
         sqliteOperations.UpdateTaskByStatus(conn,"2")
 
+    conn.close()
     with open("hacked.html", encoding='utf8') as fp:
         soup = BeautifulSoup(fp, 'html.parser')
 
