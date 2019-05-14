@@ -19,7 +19,7 @@ def twitterCreateSqliteTable(data):
         databaseTable (Source, Date, UserName, Title, Text PRIMARY KEY, Status)""")
 
     insert = "INSERT INTO DataBaseTable VALUES (\"twitter\", ?, ?, '--', ?, 0)"
-    query = ( i.strftime('%Y-%m-%d') , d['user']['screen_name'], BeautifulSoup(d['text'], "lxml").text)
+    query = (i.strftime('%Y-%m-%d') , d['user']['screen_name'], BeautifulSoup(d['text'], "lxml").text)
 
     im.execute(insert, query)
 
@@ -46,7 +46,7 @@ def createSqliteTable(data, source):
             continue
 
         insert = "INSERT INTO databaseTable VALUES (\"hurriyet\", ?, '--', ?, ?, 0)"
-        query = ( str(datetime_object.date()), str(x['Title']), BeautifulSoup(x['Text'], "lxml").text)
+        query = (str(datetime_object.date()), str(x['Title']), BeautifulSoup(x['Text'], "lxml").text)
 
         try: 
             im.execute(insert, query)
@@ -100,9 +100,11 @@ def UpdateTaskByStatus(conn, status):
     """
     cur = conn.cursor()
 
-    cur.execute("UPDATE databaseTable SET Status =" + status + " WHERE Status=\"1\"")
+    cur.execute("UPDATE databaseTable SET Status =" + status + " WHERE Status=1")
+
+    conn.commit()
     
-    #update_1 = "UPDATE databaseTable SET Status = ? WHERE Status = '1'" 
+    #update_1 = "UPDATE databaseTable SET Status = ?  WHERE Status = '1'"
     #cur.execute(update_1, status)
 
 def UpdateTextByStatusWithItuNlpApi(conn, status, textBefore, textAfter):
@@ -112,25 +114,15 @@ def UpdateTextByStatusWithItuNlpApi(conn, status, textBefore, textAfter):
     :param priority:
     :return:
     """
-    update_1 = """UPDATE databaseTable SET Status = ? WHERE Status = '0' AND Text = ? """ 
+    update_1 = """UPDATE databaseTable SET Status = ? WHERE Status = 0 AND Text = ? """ 
     update_2 = """UPDATE databaseTable SET Text = ? WHERE Text = ? """
 
     cur = conn.cursor()
-
-    cur.execute("SELECT * FROM databaseTable WHERE Text = ? ", (textBefore,))
-    rows = cur.fetchall()
-    config.logger.info(rows)
-
   
     query_input_1 = (status, textBefore)
     query_input_2 = (textAfter, textBefore)
-
-    cur.execute(update_1, query_input_1)
-    rows = cur.fetchall()
-    config.logger.info(rows)
-    cur.execute(update_2, query_input_2)
-    rows = cur.fetchall()
-    config.logger.info(rows)
-
-    cur.execute("UPDATE databaseTable SET Status =" + "4" + " WHERE Status= 0")
     
+    cur.execute(update_1, query_input_1)
+    cur.execute(update_2, query_input_2)
+
+    conn.commit()
