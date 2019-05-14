@@ -100,7 +100,7 @@ def UpdateTaskByStatus(conn, status):
     """
     cur = conn.cursor()
 
-    cur.execute("UPDATE rawTwitterDBtable SET Status =" + status + " WHERE Status=\"1\"")
+    cur.execute("UPDATE databaseTable SET Status =" + status + " WHERE Status=\"1\"")
     
     #update_1 = "UPDATE databaseTable SET Status = ? WHERE Status = '1'" 
     #cur.execute(update_1, status)
@@ -116,9 +116,21 @@ def UpdateTextByStatusWithItuNlpApi(conn, status, textBefore, textAfter):
     update_2 = """UPDATE databaseTable SET Text = ? WHERE Text = ? """
 
     cur = conn.cursor()
+
+    cur.execute("SELECT * FROM databaseTable WHERE Text = ? ", (textBefore,))
+    rows = cur.fetchall()
+    config.logger.info(rows)
+
+  
     query_input_1 = (status, textBefore)
     query_input_2 = (textAfter, textBefore)
 
     cur.execute(update_1, query_input_1)
+    rows = cur.fetchall()
+    config.logger.info(rows)
     cur.execute(update_2, query_input_2)
+    rows = cur.fetchall()
+    config.logger.info(rows)
+
+    cur.execute("UPDATE databaseTable SET Status =" + "4" + " WHERE Status= 0")
     
