@@ -81,8 +81,8 @@ def selectTaskByStatus(conn, status):
     """
     cur = conn.cursor()
     #cur.execute("SELECT * FROM databaseTable WHERE Status=\"0\" ")
-    select = "SELECT * FROM databaseTable WHERE Status= ?"
-    cur.execute(select,status)
+    select = "SELECT * FROM databaseTable WHERE Status=" + status
+    cur.execute(select,)
  
     rows = cur.fetchall()
  
@@ -101,8 +101,8 @@ def UpdateTaskByStatus(conn, status):
     """
     cur = conn.cursor()
 
-    update_1 = "UPDATE databaseTable SET Status = ?  WHERE Status = '1'"
-    cur.execute(update_1, status)
+    update_1 = "UPDATE databaseTable SET Status = '" + status + "'  WHERE Status = 1"
+    cur.execute(update_1,)
 
     conn.commit()
 

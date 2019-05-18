@@ -33,20 +33,21 @@ def start():
 
     conn = sqliteOperations.createConnection(sqliteOperations.database)
     with conn:
-        rows = sqliteOperations.selectTaskByStatus(conn,'1')
+        rows = sqliteOperations.selectTaskByStatus(conn,"1")
         for row in rows:
             findInRow(row)
 
         sqliteOperations.UpdateTaskByStatus(conn,"2")
 
     conn.close()
-    with open("hacked.html", encoding='utf8') as fp:
+    with open("userInterface.html", encoding='utf8') as fp:
         soup = BeautifulSoup(fp, 'html.parser')
 
 
 
     for name, tuple in rowList.items():
         ###
+        findCheck = soup.find(id = tuple[1][1])
         findCheck = soup.find(id = tuple[1][1])
         if findCheck == None:
             title = soup.find(id = "1")
@@ -119,10 +120,12 @@ def start():
             table.append(tbody)   
             title.append(table)
         else: 
-            badgeCheck.string.replace_with(str( int(badgeCheck.string) + tuple[0] ) )
+            badgeCheck.string.replace_with(str(int(badgeCheck.string) + tuple[0]))
         ###
 
-    with open("hacked.html","w", encoding='utf8') as fp:
+    with open("userInterface.html","w", encoding='utf8') as fp:
         fp.write(soup.prettify())
        
     rowList.clear()
+
+start()
