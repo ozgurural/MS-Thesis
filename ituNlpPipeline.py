@@ -109,10 +109,11 @@ def startItuNlpApi():
     conn = sqliteOperations.createConnection(sqliteOperations.database)
     with conn:
         while True:
-            rows = sqliteOperations.selectTaskByStatus(conn, '0')
+            rows = sqliteOperations.selectTaskByStatus(conn, "0")
             for row in rows:
                 #config.logger.info(row[4])
                 #caller = PipelineCaller(config.DEFAULT_TOOL, row[4], config.ITU_NLP_API_TOKEN, 'sentence')
                 sqliteOperations.UpdateTextByStatusWithItuNlpApi(conn, "1", row[4], row[4])
                 time.sleep(10)
             time.sleep(60)
+#startItuNlpApi()

@@ -128,4 +128,4 @@ def start():
        
     rowList.clear()
 
-start()
+#start()

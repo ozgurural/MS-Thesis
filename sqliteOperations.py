@@ -18,7 +18,7 @@ def twitterCreateSqliteTable(data):
     im.execute("""CREATE TABLE IF NOT EXISTS
         databaseTable (Source, Date, UserName, Title, Text PRIMARY KEY, Status)""")
 
-    insert = "INSERT INTO DataBaseTable VALUES (\"twitter\", ?, ?, '--', ?, 0)"
+    insert = "INSERT INTO DataBaseTable VALUES (\"twitter\", ?, ?, \"--\", ?, \"0\")"
     query = (i.strftime('%Y-%m-%d') , d['user']['screen_name'], BeautifulSoup(d['text'], "lxml").text)
 
     im.execute(insert, query)
@@ -45,7 +45,7 @@ def createSqliteTable(data, source):
         if(datetime_object.year < 2019):
             continue
 
-        insert = "INSERT INTO databaseTable VALUES (\"hurriyet\", ?, '--', ?, ?, 0)"
+        insert = "INSERT INTO databaseTable VALUES (\"hurriyet\", ?, \"--\", ?, ?, \"0\")"
         query = (str(datetime_object.date()), str(x['Title']), BeautifulSoup(x['Text'], "lxml").text)
 
         try: 
@@ -81,7 +81,8 @@ def selectTaskByStatus(conn, status):
     """
     cur = conn.cursor()
     #cur.execute("SELECT * FROM databaseTable WHERE Status=\"0\" ")
-    select = "SELECT * FROM databaseTable WHERE Status=" + status
+    select = "SELECT * FROM databaseTable WHERE Status='" +status+"' "
+    print(select)
     cur.execute(select,)
  
     rows = cur.fetchall()
@@ -101,7 +102,7 @@ def UpdateTaskByStatus(conn, status):
     """
     cur = conn.cursor()
 
-    update_1 = "UPDATE databaseTable SET Status = '" + status + "'  WHERE Status = 1"
+    update_1 = "UPDATE databaseTable SET Status = '" + status + "'  WHERE Status = '1'"
     cur.execute(update_1,)
 
     conn.commit()
@@ -113,7 +114,7 @@ def UpdateTextByStatusWithItuNlpApi(conn, status, textBefore, textAfter):
     :param priority:
     :return:
     """
-    update_1 = """UPDATE databaseTable SET Status = ? WHERE Status = 0 AND Text = ? """ 
+    update_1 = """UPDATE databaseTable SET Status = ? WHERE Status = '0' AND Text = ? """ 
     update_2 = """UPDATE databaseTable SET Text = ? WHERE Text = ? """
 
     cur = conn.cursor()
