@@ -13,4 +13,4 @@
 * **Program :** Cyber Security
 
 * **Start Date of the Thesis :** 25.11.2017	 
-* **Expected Completion Date of the Thesis :** 30.07.2019	 
+* **Expected Completion Date of the Thesis :** 07.08.2019	 
