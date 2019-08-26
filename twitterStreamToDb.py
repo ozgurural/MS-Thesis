@@ -31,7 +31,7 @@ class MyListener(tweepy.StreamListener):
 def startTwitterStreamToDb():
     config.logger.info(config.STEP_1_QUERY)
     auth = tweepy.OAuthHandler(config.CONSUMER_KEY, config.CONSUMER_SECRET)
-    auth.set_access_token(config.ACCESS_TOKEN, config.ACESS_SECRET)
+    auth.set_access_token(config.ACCESS_TOKEN, config.ACCESS_SECRET)
     api = tweepy.API(auth)
 
     twitter_stream = tweepy.Stream(auth, MyListener())
