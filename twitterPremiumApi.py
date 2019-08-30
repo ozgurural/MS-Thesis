@@ -1,13 +1,18 @@
+#-*- coding: utf-8 -*-
+#!/usr/bin/env python3
+
+
 from TwitterAPI import TwitterAPI
 from TwitterAPI import TwitterPager
 
 import csv
 import config
+import io
 
 import re
 
 
-def startTwitterPremiumApi2():
+def startTwitterPremiumApi():
     SEARCH_TERM = 'nic.tr lang:tr'
     PRODUCT = 'fullarchive'
     LABEL = 'production'
@@ -19,12 +24,12 @@ def startTwitterPremiumApi2():
 
     r = TwitterPager(api, 'tweets/search/%s/:%s' % (PRODUCT, LABEL),
         {'query':SEARCH_TERM, 
-        'fromDate':'201512100000',
-        'toDate':'201512282359',
+        'fromDate':'201412100000',
+        'toDate':'201512092359',
         "maxResults": "100"
         }).get_iterator()
 
-    csvFile = open('data.csv', 'w',encoding='UTF-8')
+    csvFile = io.open('2014-2015.csv', 'w',encoding='UTF-8')
     csvWriter = csv.writer(csvFile)
 
     for item in r:
@@ -52,15 +57,15 @@ def findInRow(row):
         print(i +":"+ str(freqList[i]))
 
 
-def startTwitterPremiumApi():
+def startTwitterPremiumApi2():
     csv.register_dialect('myDialect',
     delimiter = ',',
     quoting=csv.QUOTE_ALL,
     skipinitialspace=True)
 
-    with open('data.csv', 'r', encoding='utf-8') as csvFile:
+    with io.open('2014-2015.csv', 'r', encoding='utf-8') as csvFile:
         reader = csv.reader(csvFile, dialect='myDialect')
         for row in reader:
             print(row[7].split())
-            findInRow(row[7].split())
+            #findInRow(row[7].split())
     csvFile.close()

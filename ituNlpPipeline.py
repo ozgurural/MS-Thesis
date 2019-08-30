@@ -1,12 +1,21 @@
+#!/usr/bin/env python3
+#-*- coding: utf-8 -*-
+
 # To run this code, first edit config.py with your configuration
 #
 
-#!/usr/bin/python3
-#-*- coding: utf-8 -*-
+
 import time
 import re
-import urllib.parse
-import urllib.request
+try:
+    from urllib.parse import urlparse
+except ImportError:
+     from urlparse import urlparse
+
+try: #python3
+    from urllib.request import urlopen
+except: #python2
+    from urllib2 import urlopen
 
 import config
 import sqliteOperations
