@@ -41,6 +41,12 @@ def startTwitterPremiumApi():
                         item["geo"],
                         item["coordinates"], 
                         item['text'] if 'text' in item else item])
+        try:
+            sqliteOperations.twitterCreateSqliteTable(item);
+            return True
+        except BaseException as e:
+            config.logger.error("Error on_data: %s" % str(e))
+            time.sleep(5)
 
 
 freqList = {}
