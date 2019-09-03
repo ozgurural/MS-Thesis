@@ -5,6 +5,8 @@ import sys
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
+import sqlite3
+
 driver = None
 
 INFO = "[INFO]"
@@ -12,7 +14,7 @@ ERROR = "[ERROR]"
 
 CHROME75 = "chromedriver76"
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36"
-ADVANCED_SEARCH_PAGE_TOP = "https://twitter.com/search?l=tr&q=since%3A{}%20until%3A{}&src=typd"
+ADVANCED_SEARCH_PAGE_TOP = "https://twitter.com/search?q=((siber%20saldırı)%20OR%20hacklendi%20OR%20(fidye%20yazılımı)%20OR%20zafiyet%20OR%20ddos%20OR%20erişilemiyor%20OR%20(zararlı%20yazılım)%20OR%20malware%20OR%20virüs%20OR%20(casus%20yazılım)%20OR%20fidye%20OR%20yazılımı%20OR%20oltalama%20OR%20phising%20OR%20(güvenlik%20duvarı)%20OR%20firewall%20OR%20hacker%20OR%20(sistem%20açığı)%20OR%20cyberattack%20OR%20cyberwarfare%20OR%20hacking%20OR%20(kimlik%20avı)%20OR%20spear-phishing)%20lang%3Atr%20until%3A2015-12-28%20since%3A2015-12-14&src=typed_query"
 ADVANCED_SEARCH_PAGE_LATEST = "https://twitter.com/search?f=tweets&vertical=default&q=since%3A2015-02-14%20until%3A2015-02-28&l=tr&src=typd"
 SCROLL_PAUSE_TIME = 1
 
@@ -77,6 +79,12 @@ def work():
 
 	tweet_index = 1
 
+	databaseTable = sqlite3.connect(database)
+
+	im = databaseTable.cursor()
+	im.execute("""CREATE TABLE IF NOT EXISTSdatabaseTable (Source, Date, UserName, Title, Text PRIMARY KEY, Status)""")
+
+
 	# Get scroll height
 	last_height = driver.execute_script("return document.body.scrollHeight")
 	while True:
@@ -102,6 +110,7 @@ def work():
 			print(tweet.find_element_by_class_name("tweet-timestamp").find_element_by_class_name("_timestamp").get_attribute("data-time-ms"))
 			print(tweet.find_element_by_class_name("tweet-text").text)
 			tweet_index += 1
+
 
 		# print("%s %s Tweet count: %s" % (get_time(), INFO, tweet_count), end="\r", flush=True)
 
