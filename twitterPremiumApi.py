@@ -13,7 +13,7 @@ import re
 
 
 def startTwitterPremiumApi():
-    SEARCH_TERM = 'nic.tr lang:tr'
+    SEARCH_TERM = 'siber OR hacklendi OR (fidye yazılımı) lang:tr'
     PRODUCT = 'fullarchive'
     LABEL = 'production'
 
@@ -24,29 +24,19 @@ def startTwitterPremiumApi():
 
     r = TwitterPager(api, 'tweets/search/%s/:%s' % (PRODUCT, LABEL),
         {'query':SEARCH_TERM, 
-        'fromDate':'201412100000',
-        'toDate':'201512092359',
+        'fromDate':'201512070000',
+        'toDate':'201512132359',
         "maxResults": "100"
         }).get_iterator()
 
-    csvFile = io.open('2014-2015.csv', 'w',encoding='UTF-8')
+    csvFile = io.open('2015_before_nictr_attack.csv', 'w',encoding='UTF-8')
     csvWriter = csv.writer(csvFile)
 
     for item in r:
         csvWriter.writerow([item['created_at'],
-                        item["id_str"],
-                        item["source"],                    
+                        item["id_str"],          
                         item['user']['screen_name'],
-                        item["user"]["location"],
-                        item["geo"],
-                        item["coordinates"], 
                         item['text'] if 'text' in item else item])
-        try:
-            sqliteOperations.twitterCreateSqliteTable(item);
-            return True
-        except BaseException as e:
-            config.logger.error("Error on_data: %s" % str(e))
-            time.sleep(5)
 
 
 freqList = {}
