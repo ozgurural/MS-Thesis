@@ -16,9 +16,9 @@ import time
 rowList = {}
 
 def securityEventsWebPortalStart():
-    while True:
-        start()
-        time.sleep(60)
+    #while True:
+    start()
+    #time.sleep(60)
 
 def findInRow(row):
     for selected_strings in config.STRING_VECTOR:
@@ -33,14 +33,14 @@ def start():
 
     conn = sqliteOperations.createConnection(sqliteOperations.database)
     with conn:
-        rows = sqliteOperations.selectTaskByStatus(conn,"1")
+        rows = sqliteOperations.selectTaskByStatus(conn,"2")
         for row in rows:
             findInRow(row)
 
         sqliteOperations.UpdateTaskByStatus(conn,"2")
 
     conn.close()
-    with open("userInterface.html", encoding='utf8') as fp:
+    with open("14-28_dec_2015_securityEventsDataBase.html", encoding='utf8') as fp:
         soup = BeautifulSoup(fp, 'html.parser')
 
 
@@ -123,7 +123,7 @@ def start():
             badgeCheck.string.replace_with(str(int(badgeCheck.string) + tuple[0]))
         ###
 
-    with open("userInterface.html","w", encoding='utf8') as fp:
+    with open("14-28_dec_2015_securityEventsDataBase.html","w", encoding='utf8') as fp:
         fp.write(soup.prettify())
        
     rowList.clear()

@@ -7,7 +7,7 @@ import config
 
 from bs4 import BeautifulSoup
 
-database = "securityEventsDataBase.sqlite"
+database = "14-28_dec_2015_securityEventsDataBase.sqlite"
 
 def twitterCreateSqliteTable(data):
     d = json.loads(data)
@@ -82,7 +82,7 @@ def selectTaskByStatus(conn, status):
     cur = conn.cursor()
     #cur.execute("SELECT * FROM databaseTable WHERE Status=\"0\" ")
     select = "SELECT * FROM databaseTable WHERE Status='" +status+"' "
-    print(select)
+    #print(select)
     cur.execute(select,)
  
     rows = cur.fetchall()
@@ -102,7 +102,7 @@ def UpdateTaskByStatus(conn, status):
     """
     cur = conn.cursor()
 
-    update_1 = "UPDATE databaseTable SET Status = '" + status + "'  WHERE Status = '1'"
+    update_1 = "UPDATE databaseTable SET Status = '" + status + "'  WHERE Status = '0'"
     cur.execute(update_1,)
 
     conn.commit()
@@ -114,7 +114,7 @@ def UpdateTextByStatusWithItuNlpApi(conn, status, textBefore, textAfter):
     :param priority:
     :return:
     """
-    update_1 = """UPDATE databaseTable SET Status = ? WHERE Status = '0' AND Text = ? """ 
+    update_1 = """UPDATE databaseTable SET Status = ? WHERE Status = '2' AND Text = ? """ 
     update_2 = """UPDATE databaseTable SET Text = ? WHERE Text = ? """
 
     cur = conn.cursor()

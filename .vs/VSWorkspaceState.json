@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src"
   ],
-  "SelectedNode": "\\sqliteOperations.py",
+  "SelectedNode": "\\manager.py",
   "PreviewInSolutionExplorer": false
 }
