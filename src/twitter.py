@@ -20,12 +20,7 @@ SCROLL_PAUSE_TIME = 1
 
 
 def init_print():
-	print("    __                         __")
-	print("   / /_  __  _______________  / /")
-	print("  / __ \/ / / / ___/ ___/ _ \/ / ")
-	print(" / /_/ / /_/ / /  / /__/  __/ /  ")
-	print("/_.___/\__,_/_/   \___/\___/_/   ")
-	print("                                 ")
+	print("-*******")
 
 
 # Get current time
